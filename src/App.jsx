@@ -22,7 +22,8 @@ function App() {
 
   const guardaGasto = gasto => {
     gasto.id = generarId()
-    setGastos(...gastos, gasto)
+    gasto.fecha = Date.now()
+    setGastos([...gastos, gasto])
 
     setAnimarModal(false)
     setTimeout(() => {
