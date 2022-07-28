@@ -7,12 +7,11 @@ const ControlPresupuesto = ({gastos, presupuesto}) => {
 
     //cada vez que cambie y la primera vez se va a estar ejecutando
     useEffect(() => {
-        const totalGastado = gastos.reduce( ( total, gasto) => gasto.cantida, 0 )
+        const totalGastado = gastos.reduce( ( total, gasto) => gasto.cantidad + total, 0 )
         setGastado(totalGastado)
 
-        //const totalDisponible = presupuesto - totalGastado
-
-        //setDisponible(totalDisponible)
+        const totalDisponible = presupuesto - totalGastado
+        setDisponible(totalDisponible)
         
     }, [gastos])
 
