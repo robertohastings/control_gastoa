@@ -1,6 +1,6 @@
 import React from 'react'
 import Gasto from './Gasto'
-const ListadoGastos = ({ gastos }) => {
+const ListadoGastos = ({ gastos, setGastoEditar }) => {
 
     //{console.log(gastos.length)}
 
@@ -12,6 +12,7 @@ const ListadoGastos = ({ gastos }) => {
           <Gasto
             key={gasto.id}
             gasto={gasto}
+            setGastoEditar={setGastoEditar}
           />
         ))}
 

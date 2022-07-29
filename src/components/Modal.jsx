@@ -1,14 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Mensaje from './Mensaje'
 import CerrarBtn from '../img/cerrar.svg'
 
-const Modal = ({setModal, animarModal, setAnimarModal, guardaGasto}) => {
+const Modal = ({setModal, animarModal, setAnimarModal, guardaGasto, gastoEditar}) => {
 
-    const [mensaje, setMensaje] = useState('')
-    
+    const [mensaje, setMensaje] = useState('')    
     const [nombre, setNombre] = useState('')
     const [cantidad, setCantidad] = useState(0)
     const [categoria, setCategoria] = useState('')
+
+    useEffect(() => {
+        if ( Object.keys(gastoEditar).length > 0){
+            setNombre(gastoEditar.nombre)
+            setCantidad(gastoEditar.cantidad)
+            setCategoria(gastoEditar.categoria)
+          }
+    }, []) //<-- se ejecuta una vez cuando tenga las dependencias vacias
 
 
     const oculatModal = () => {
