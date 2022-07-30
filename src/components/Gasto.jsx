@@ -27,7 +27,7 @@ const diccionarioIconos = {
   suscripciones : IconoSuscripciones
 }
 
-const Gasto = ({gasto, setGastoEditar}) => {
+const Gasto = ({gasto, setGastoEditar, eliminarGasto}) => {
 
   //se puede aplicar distracción para no usar gasto.categoria en el párrafo a imprimir
   const { categoria, nombre, cantidad, id, fecha } = gasto
@@ -41,7 +41,10 @@ const Gasto = ({gasto, setGastoEditar}) => {
   )
   const trailingActions = () => (
     <TrailingActions>
-        <SwipeAction onClick={() => console.log('elimiknar...')}>
+        <SwipeAction 
+            onClick={() => eliminarGasto(id)}
+            destructive={true}
+        >
             Eliminar
         </SwipeAction>
     </TrailingActions>
