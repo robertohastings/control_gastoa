@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
+import Filtros from './components/Filtros'
 import ListadoGastos from './components/ListadoGastos'
 import Modal from './components/Modal'
 import { generarId } from './helpers'
 import IconoNuevoGasto from './img/nuevo-gasto.svg'
 
 function App() {
-  const [gastos, setGastos] = useState([])
+  const [gastos, setGastos] = useState(
+    localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []
+  )
   const [presupuesto, setPresupuesto] = useState(
     Number(localStorage.getItem('presupuesto') ?? 0)
   )
@@ -14,6 +17,7 @@ function App() {
   const [modal, setModal] = useState(false)
   const [animarModal, setAnimarModal] = useState(false)  
   const [gastoEditar, setGastoEditar] = useState({})
+  const [filtro, setFiltro] = useState('')
 
 useEffect(() => {
   if ( Object.keys(gastoEditar).length > 0){
@@ -29,11 +33,20 @@ useEffect(() => {
   localStorage.setItem('presupuesto', presupuesto ?? 0)
 }, [presupuesto])
 
+//se ejecuta cuando gastos cambia de valor
+useEffect(() => {
+  //almaceno en local storage los gastos pero antes lo convierto a un string el arreglo con
+  //JSON.stringify si no existe se almacena una arreglo vacio.
+  localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
+}, [gastos])
+
 useEffect(() => {
   const presupestoLS = Number(localStorage.getItem('presupuesto')) ?? 0
   
-  if (presupestoLS)
-}, [])
+  if (presupestoLS > 0){
+      setIsValidPresupuesto(true)
+  }
+}, [gastos])
 
   const handleNuevoGasto = () => {
     setModal(true)
@@ -87,6 +100,10 @@ useEffect(() => {
       {isValidPresupuesto && (
         <>
           <main>
+            <Filtros
+              filtro={filtro}
+              setFiltro={setFiltro}
+            />
             <ListadoGastos
               gastos={gastos}
               setGastoEditar={setGastoEditar}
