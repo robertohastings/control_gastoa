@@ -18,6 +18,7 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false)  
   const [gastoEditar, setGastoEditar] = useState({})
   const [filtro, setFiltro] = useState('')
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
 
 useEffect(() => {
   if ( Object.keys(gastoEditar).length > 0){
@@ -39,6 +40,14 @@ useEffect(() => {
   //JSON.stringify si no existe se almacena una arreglo vacio.
   localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
 }, [gastos])
+
+useEffect(() =>{
+  if (filtro){
+    //Filtrar gastos por categoria
+    const gastosFiltrados = gastos.filter( gasto => gasto.categoria === filtro)
+    setGastosFiltrados(gastosFiltrados)
+  }
+}, [filtro])
 
 useEffect(() => {
   const presupestoLS = Number(localStorage.getItem('presupuesto')) ?? 0
@@ -79,7 +88,7 @@ useEffect(() => {
     setAnimarModal(false)
     setTimeout(() => {
         setModal(false)
-    }, 500);pu
+    }, 500)
   }
 
   const eliminarGasto = id => {
@@ -108,6 +117,8 @@ useEffect(() => {
               gastos={gastos}
               setGastoEditar={setGastoEditar}
               eliminarGasto={eliminarGasto}
+              filtro={filtro}
+              gastosFiltrados={gastosFiltrados}
             />
 
           </main>
